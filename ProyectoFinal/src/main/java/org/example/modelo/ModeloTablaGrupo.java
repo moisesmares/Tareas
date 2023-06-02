@@ -34,7 +34,7 @@ public class ModeloTablaGrupo implements TableModel {
 
     @Override
     public String getColumnName(int rowIndex) {
-        switch (rowIndex){
+        switch (rowIndex) {
             case 0:
                 return "id";
             case 1:
@@ -55,7 +55,7 @@ public class ModeloTablaGrupo implements TableModel {
 
     @Override
     public Class<?> getColumnClass(int rowIndex) {
-        switch (rowIndex){
+        switch (rowIndex) {
             case 0:
                 return Integer.class;
             case 1:
@@ -82,7 +82,7 @@ public class ModeloTablaGrupo implements TableModel {
     @Override
     public Object getValueAt(int rowIndex, int columIndex) {
         Grupo tmp = datos.get(rowIndex);
-        switch (columIndex){
+        switch (columIndex) {
             case 0:
                 return tmp.getId();
             case 1:
@@ -102,8 +102,8 @@ public class ModeloTablaGrupo implements TableModel {
     }
 
     @Override
-    public void setValueAt(Object o, int rowIndex,  int colIndex) {
-        switch (colIndex){
+    public void setValueAt(Object o, int rowIndex, int colIndex) {
+        switch (colIndex) {
             case 0:
                 //datos.get(rowIndex).setId(0;
                 break;
@@ -141,30 +141,48 @@ public class ModeloTablaGrupo implements TableModel {
 
     }
 
-    public void cargarDatos(){
+    public void cargarDatos() {
         try {
             ArrayList<Grupo> tirar = gpo.obtenerTodo();
             System.out.println(tirar);
             datos = gpo.obtenerTodo();
-        }catch (SQLException sqle){
+        } catch (SQLException sqle) {
             System.out.println("Error");
         }
     }
-    public boolean agregarGrupo(Grupo grupo){
+
+    public boolean agregarGrupo(Grupo grupo) {
         boolean resultado = false;
-        try{
-            if (gpo.insertar(grupo)){
+        try {
+            if (gpo.insertar(grupo)) {
                 datos.add(grupo);
                 resultado = true;
-            }else{
+            } else {
                 resultado = false;
             }
-        }catch (SQLException sqle){
+        } catch (SQLException sqle) {
             System.out.println(sqle.getMessage());
         }
         return resultado;
     }
-    public Grupo getGrupoAtIndex(int index){
+
+    public Grupo getGrupoAtIndex(int index) {
         return datos.get(index);
+    }
+
+
+    public boolean modificarGrupo(Grupo grupo) {
+        boolean resultado = true;
+        try {
+            if (gpo.update(grupo)) {
+                datos.add(grupo);
+                resultado = true;
+            } else {
+                resultado = false;
+            }
+        } catch (SQLException sqle) {
+            System.out.println(sqle.getMessage());
+        }
+        return resultado;
     }
 }
