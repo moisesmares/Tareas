@@ -58,6 +58,23 @@ public class ControladorGrupo extends MouseAdapter {
             }catch (MalformedURLException mfue){
                 System.out.println(e.toString());
             }
+            if (e.getSource() == this.view.getBtnActualizar()) {
+            System.out.println("Evento sobre boton Actualizar");
+            int rowIndex = this.view.getTabla().getSelectedRow();
+            Grupo grupo = new Grupo();
+            grupo.setNombre(this.view.getTxtNombre1().getText());
+            grupo.setEmpresa(this.view.getTxtEmpresa1().getText());
+            grupo.setNumeroIntegrantes(Integer.parseInt(this.view.getTxtNumeroIntegrantes1().getText()));
+            grupo.setTiempoActividad(Integer.parseInt(this.view.getTxtTiempoActividad1().getText()));
+            grupo.setCancion(this.view.getTxtCancion1().getText());
+            grupo.setUrllFoto(this.view.getTxtUrl_Foto1().getText());
+            if (modelo.modificarGrupo(grupo)) {
+                JOptionPane.showMessageDialog(view, "Se modifico correctamente", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                this.view.getTabla().updateUI();
+            } else {
+                JOptionPane.showMessageDialog(view, "No se pudo modificar", "Error al Insertar", JOptionPane.ERROR_MESSAGE);
+
+            }
         }
     }
 }
