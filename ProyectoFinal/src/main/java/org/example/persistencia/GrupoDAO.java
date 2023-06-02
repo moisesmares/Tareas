@@ -31,7 +31,7 @@ public class GrupoDAO implements InterfazDAO {
 
     @Override
     public boolean update(Object obj) throws SQLException {
-        String sqlUpdate = "UPDATE grupos SET nombre = ?, empresa = ?, numerointegrantes = ?, tiempoactividad = ?, cancion = ?, url = ?;";
+        String sqlUpdate = "UPDATE grupos SET nombre = ?, empresa = ?, numerointegrantes = ?, tiempoactividad = ?, cancion = ?, url = ? WHERE id = ?;";
        int rowCount = 0;
        PreparedStatement pstm = ConexionSingleton.getInstance("Grupos.db").getConnection().prepareStatement(sqlUpdate);
        pstm.setString(1, ((Grupo)obj).getNombre());
