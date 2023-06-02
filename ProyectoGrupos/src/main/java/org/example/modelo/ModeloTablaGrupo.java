@@ -185,4 +185,18 @@ public class ModeloTablaGrupo implements TableModel {
         }
         return resultado;
     }
+    public boolean eliminarGrupo(String id){
+        boolean resultado = false;
+        try{
+            if (gpo.delete(id)){
+                resultado = true;
+            }else {
+                resultado = false;
+            }
+        }catch (SQLException sqle){
+            System.out.println(sqle.getMessage());
+        }
+        return resultado;
+    }
+
 }

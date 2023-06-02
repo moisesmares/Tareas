@@ -63,12 +63,12 @@ public class ControladorGrupo extends MouseAdapter {
             } catch (MalformedURLException mfue) {
                 System.out.println(e.toString());
             }
-            this.view.getTxtNombre().setText(tmp.getNombre());
-            this.view.getTxtEmpresa().setText(tmp.getEmpresa());
-            this.view.getTxtNumeroIntegrantes().setText(String.valueOf(tmp.getNumeroIntegrantes()));
-            this.view.getTxtTiempoActividad().setText(String.valueOf(tmp.getTiempoActividad()));
-            this.view.getTxtCancion().setText(tmp.getCancion());
-            this.view.getTxtUrl_Foto().setText(tmp.getUrllFoto());
+            this.view.getTxtNombre1().setText(tmp.getNombre());
+            this.view.getTxtEmpresa1().setText(tmp.getEmpresa());
+            this.view.getTxtNumeroIntegrantes1().setText(String.valueOf(tmp.getNumeroIntegrantes()));
+            this.view.getTxtTiempoActividad1().setText(String.valueOf(tmp.getTiempoActividad()));
+            this.view.getTxtCancion1().setText(tmp.getCancion());
+            this.view.getTxtUrl_Foto1().setText(tmp.getUrllFoto());
         }
 
         if (e.getSource() == this.view.getBtnActualizar()) {
@@ -77,25 +77,42 @@ public class ControladorGrupo extends MouseAdapter {
             Grupo tmp = modelo.getGrupoAtIndex(rowIndex);
             Grupo grupo = new Grupo();
 
-                grupo.setNombre(this.view.getTxtNombre1().getText());
-                grupo.setEmpresa(this.view.getTxtEmpresa1().getText());
-                grupo.setNumeroIntegrantes(Integer.parseInt(this.view.getTxtNumeroIntegrantes1().getText()));
-                grupo.setTiempoActividad(Integer.parseInt(this.view.getTxtTiempoActividad1().getText()));
-                grupo.setCancion(this.view.getTxtCancion1().getText());
-                grupo.setUrllFoto(this.view.getTxtUrl_Foto1().getText());
-                grupo.setId(tmp.getId());
-                if (modelo.modificarGrupo(grupo)) {
-                    JOptionPane.showMessageDialog(view, "Se modifico correctamente", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-                    modelo.cargarDatos();
-                    this.view.getTabla().setModel(modelo);
-                    this.view.getTabla().updateUI();
-                } else {
-                    JOptionPane.showMessageDialog(view, "No se pudo modificar", "Error al Insertar", JOptionPane.ERROR_MESSAGE);
-
-                }
+            grupo.setNombre(this.view.getTxtNombre1().getText());
+            grupo.setEmpresa(this.view.getTxtEmpresa1().getText());
+            grupo.setNumeroIntegrantes(Integer.parseInt(this.view.getTxtNumeroIntegrantes1().getText()));
+            grupo.setTiempoActividad(Integer.parseInt(this.view.getTxtTiempoActividad1().getText()));
+            grupo.setCancion(this.view.getTxtCancion1().getText());
+            grupo.setUrllFoto(this.view.getTxtUrl_Foto1().getText());
+            grupo.setId(tmp.getId());
+            if (modelo.modificarGrupo(grupo)) {
+                JOptionPane.showMessageDialog(view, "Se modifico correctamente", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                modelo.cargarDatos();
+                this.view.getTabla().setModel(modelo);
                 this.view.getTabla().updateUI();
-            
+            } else {
+                JOptionPane.showMessageDialog(view, "No se pudo modificar", "Error al Insertar", JOptionPane.ERROR_MESSAGE);
+
+            }
+            this.view.getTabla().updateUI();
+
 
         }
+        if (e.getSource() == this.view.getBtnDelete()){
+            ModeloTablaGrupo temp = new ModeloTablaGrupo();
+            int index = this.view.getTabla().getSelectedRow();
+            Grupo tmp = modelo.getGrupoAtIndex(index);
+
+            if (temp.eliminarGrupo(Integer.toString(tmp.getId()))){
+
+                JOptionPane.showMessageDialog(view, "Se eliminó correctamente", "Aviso"
+                , JOptionPane.INFORMATION_MESSAGE);
+                modelo.cargarDatos();
+                this.view.getTabla().updateUI();
+                this.view.limpiar();
+            }else {
+                JOptionPane.showMessageDialog(view, "No se pudo eliminar la base", "Error al insertar", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        this.view.limpiar();
     }
 }
